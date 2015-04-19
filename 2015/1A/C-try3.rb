@@ -1,7 +1,4 @@
-########################################################
-# Crystal compiler 0.6.1 from http://crystal-lang.org/ #
-# (statically typed language, based on Ruby syntax)    #
-########################################################
+#!/usr/bin/env ruby
 
 PIXTHRESHOLD = 50
 SUBZONETHRESHOLD = 16
@@ -52,9 +49,9 @@ class ForestZone
     y1 = ycoord.min
     x2 = xcoord.max
     y2 = ycoord.max
-    @extents = [{x1, y1}, {x1, y2}, {x2, y1}, {x2, y2}]
+    @extents = [[x1, y1], [x1, y2], [x2, y1], [x2, y2]]
     @treelist = treelist.shuffle
-    @subzones = [] of ForestZone
+    @subzones = []
     @scratch = [0, 0]
     if @treelist.size > PIXTHRESHOLD
       tmp = [@treelist]
@@ -105,7 +102,7 @@ end
 
 abort "Need input file name in the command line" if ARGV.size < 1
 
-input = File.open(ARGV[0]).read.split.map {|x| x.to_i64 }
+input = File.open(ARGV[0]).read.split.map {|x| x.to_i }
 
 casenum = 1
 t = input.shift
@@ -115,8 +112,8 @@ t = input.shift
   casenum += 1
 
   n = input.shift.to_i
-  trees = [] of Tuple(Int64, Int64)
-  1.upto(n) {|idx| trees.push({input.shift, input.shift}) }
+  trees = []
+  1.upto(n) {|idx| trees.push([input.shift, input.shift]) }
 
   zone = ForestZone.new(trees)
 
