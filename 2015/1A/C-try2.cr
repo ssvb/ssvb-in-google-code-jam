@@ -32,8 +32,10 @@ t = input.shift
           next if n1 == idx || n2 == idx
           if tree[0] < p1[0]
             res[0] += 1
+            break if res[0] >= mincount && res[1] >= mincount
           elsif tree[0] > p1[0]
             res[1] += 1
+            break if res[0] >= mincount && res[1] >= mincount
           end
         }
       else
@@ -48,13 +50,16 @@ t = input.shift
           y = tree[0] * mup + bconst
           if y > tree[1] * mdown
             res[0] += 1
+            break if res[0] >= mincount && res[1] >= mincount
           elsif y < tree[1] * mdown
             res[1] += 1
+            break if res[0] >= mincount && res[1] >= mincount
           end
         }
       end
 
       mincount = [mincount, res.min].min
+      break if mincount == 0
     }
     if n <= 3
       p 0
